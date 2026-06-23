@@ -142,117 +142,166 @@ class _DetailWidgetState extends State<DetailWidget> {
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 0.0, 16.0, 0.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 44.0,
-                                    height: 44.0,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Image.asset(
-                                      'assets/images/criunr.png',
-                                      fit: BoxFit.cover,
-                                    ),
+                              child: FutureBuilder<List<AdminRow>>(
+                                future: AdminTable().querySingleRow(
+                                  queryFn: (q) => q.eqOrNull(
+                                    'id',
+                                    columnPostinganRow?.idAdmin,
                                   ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'HIMASI',
-                                            style: FlutterFlowTheme.of(context)
-                                                .titleLarge
-                                                .override(
-                                                  font: GoogleFonts.outfit(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .titleLarge
-                                                            .fontStyle,
-                                                  ),
-                                                  color: Colors.black,
-                                                  fontSize: 14.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .titleLarge
-                                                          .fontStyle,
-                                                ),
+                                ),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 50.0,
+                                        height: 50.0,
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
                                           ),
-                                          Text(
-                                            '@himasisttnf',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  font: GoogleFonts.inter(
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                  ),
-                                                  fontSize: 10.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
-                                    ].divide(SizedBox(width: 8.0)),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        130.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      '1 hari lalu',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            font: GoogleFonts.inter(
-                                              fontWeight: FontWeight.normal,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                            color: Color(0xFF818181),
-                                            fontSize: 10.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.normal,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
+                                    );
+                                  }
+                                  List<AdminRow> rowAdminRowList =
+                                      snapshot.data!;
+
+                                  final rowAdminRow = rowAdminRowList.isNotEmpty
+                                      ? rowAdminRowList.first
+                                      : null;
+
+                                  return Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: 44.0,
+                                        height: 44.0,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Image.asset(
+                                          'assets/images/criunr.png',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                valueOrDefault<String>(
+                                                  rowAdminRow?.nama,
+                                                  'username',
+                                                ),
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .titleLarge
+                                                    .override(
+                                                      font: GoogleFonts.outfit(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleLarge
+                                                                .fontStyle,
+                                                      ),
+                                                      color: Colors.black,
+                                                      fontSize: 14.0,
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleLarge
+                                                              .fontStyle,
+                                                    ),
+                                              ),
+                                              Text(
+                                                valueOrDefault<String>(
+                                                  rowAdminRow?.email,
+                                                  '@email',
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font:
+                                                              GoogleFonts.inter(
+                                                            fontWeight:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          fontSize: 10.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                              ),
+                                            ],
                                           ),
-                                    ),
-                                  ),
-                                ].divide(SizedBox(width: 16.0)),
+                                        ].divide(SizedBox(width: 8.0)),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            100.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          dateTimeFormat(
+                                              "relative",
+                                              columnPostinganRow!
+                                                  .tanggalDibuat!),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.inter(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                color: Color(0xFF818181),
+                                                fontSize: 10.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.normal,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                        ),
+                                      ),
+                                    ].divide(SizedBox(width: 16.0)),
+                                  );
+                                },
                               ),
                             ),
                             Padding(
@@ -376,10 +425,12 @@ class _DetailWidgetState extends State<DetailWidget> {
                                   ),
                                   FutureBuilder<List<KomenRow>>(
                                     future: KomenTable().queryRows(
-                                      queryFn: (q) => q.eqOrNull(
-                                        'id_postingan',
-                                        widget!.postId,
-                                      ),
+                                      queryFn: (q) => q
+                                          .eqOrNull(
+                                            'id_postingan',
+                                            widget!.postId,
+                                          )
+                                          .order('tanggal_komen'),
                                     ),
                                     builder: (context, snapshot) {
                                       // Customize what your widget looks like when it's loading.
@@ -410,84 +461,104 @@ class _DetailWidgetState extends State<DetailWidget> {
                                           final listViewKomenRow =
                                               listViewKomenRowList[
                                                   listViewIndex];
-                                          return FutureBuilder<List<AdminRow>>(
-                                            future: AdminTable().querySingleRow(
-                                              queryFn: (q) => q.eqOrNull(
-                                                'id',
-                                                listViewKomenRow.idUser,
+                                          return Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 20.0),
+                                            child:
+                                                FutureBuilder<List<AdminRow>>(
+                                              future:
+                                                  AdminTable().querySingleRow(
+                                                queryFn: (q) => q.eqOrNull(
+                                                  'id',
+                                                  listViewKomenRow.idUser,
+                                                ),
                                               ),
-                                            ),
-                                            builder: (context, snapshot) {
-                                              // Customize what your widget looks like when it's loading.
-                                              if (!snapshot.hasData) {
-                                                return Center(
-                                                  child: SizedBox(
-                                                    width: 50.0,
-                                                    height: 50.0,
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      valueColor:
-                                                          AlwaysStoppedAnimation<
-                                                              Color>(
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .primary,
+                                              builder: (context, snapshot) {
+                                                // Customize what your widget looks like when it's loading.
+                                                if (!snapshot.hasData) {
+                                                  return Center(
+                                                    child: SizedBox(
+                                                      width: 50.0,
+                                                      height: 50.0,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        valueColor:
+                                                            AlwaysStoppedAnimation<
+                                                                Color>(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                );
-                                              }
-                                              List<AdminRow> rowAdminRowList =
-                                                  snapshot.data!;
+                                                  );
+                                                }
+                                                List<AdminRow> rowAdminRowList =
+                                                    snapshot.data!;
 
-                                              final rowAdminRow =
-                                                  rowAdminRowList.isNotEmpty
-                                                      ? rowAdminRowList.first
-                                                      : null;
+                                                final rowAdminRow =
+                                                    rowAdminRowList.isNotEmpty
+                                                        ? rowAdminRowList.first
+                                                        : null;
 
-                                              return Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    width: 40.0,
-                                                    height: 40.0,
-                                                    clipBehavior:
-                                                        Clip.antiAlias,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
+                                                return Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      width: 40.0,
+                                                      height: 40.0,
+                                                      clipBehavior:
+                                                          Clip.antiAlias,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: Image.asset(
+                                                        'assets/images/zwxfrg.png',
+                                                        fit: BoxFit.cover,
+                                                      ),
                                                     ),
-                                                    child: Image.asset(
-                                                      'assets/images/zwxfrg.png',
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Text(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                rowAdminRow
-                                                                    ?.nama,
-                                                                'username',
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .titleSmall
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .outfit(
+                                                    Expanded(
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            children: [
+                                                              Text(
+                                                                valueOrDefault<
+                                                                    String>(
+                                                                  rowAdminRow
+                                                                      ?.nama,
+                                                                  'username',
+                                                                ),
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmall
+                                                                    .override(
+                                                                      font: GoogleFonts
+                                                                          .outfit(
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle: FlutterFlowTheme.of(context)
+                                                                            .titleSmall
+                                                                            .fontStyle,
+                                                                      ),
+                                                                      color: Color(
+                                                                          0xFF151C27),
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w600,
@@ -496,32 +567,30 @@ class _DetailWidgetState extends State<DetailWidget> {
                                                                           .titleSmall
                                                                           .fontStyle,
                                                                     ),
-                                                                    color: Color(
-                                                                        0xFF151C27),
-                                                                    fontSize:
-                                                                        12.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .titleSmall
-                                                                        .fontStyle,
-                                                                  ),
-                                                            ),
-                                                            Text(
-                                                              dateTimeFormat(
-                                                                  "relative",
-                                                                  listViewKomenRow
-                                                                      .tanggalKomen!),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodySmall
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .inter(
+                                                              ),
+                                                              Text(
+                                                                dateTimeFormat(
+                                                                    "relative",
+                                                                    listViewKomenRow
+                                                                        .tanggalKomen!),
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodySmall
+                                                                    .override(
+                                                                      font: GoogleFonts
+                                                                          .inter(
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        fontStyle: FlutterFlowTheme.of(context)
+                                                                            .bodySmall
+                                                                            .fontStyle,
+                                                                      ),
+                                                                      color: Color(
+                                                                          0xFF757682),
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .normal,
@@ -530,12 +599,20 @@ class _DetailWidgetState extends State<DetailWidget> {
                                                                           .bodySmall
                                                                           .fontStyle,
                                                                     ),
-                                                                    color: Color(
-                                                                        0xFF757682),
-                                                                    fontSize:
-                                                                        12.0,
-                                                                    letterSpacing:
-                                                                        0.0,
+                                                              ),
+                                                            ].divide(SizedBox(
+                                                                width: 8.0)),
+                                                          ),
+                                                          Text(
+                                                            listViewKomenRow
+                                                                .isi,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodySmall
+                                                                .override(
+                                                                  font:
+                                                                      GoogleFonts
+                                                                          .inter(
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .normal,
@@ -544,19 +621,12 @@ class _DetailWidgetState extends State<DetailWidget> {
                                                                         .bodySmall
                                                                         .fontStyle,
                                                                   ),
-                                                            ),
-                                                          ].divide(SizedBox(
-                                                              width: 8.0)),
-                                                        ),
-                                                        Text(
-                                                          listViewKomenRow.isi,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodySmall
-                                                              .override(
-                                                                font:
-                                                                    GoogleFonts
-                                                                        .inter(
+                                                                  color: Color(
+                                                                      0xFF444651),
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
@@ -564,29 +634,19 @@ class _DetailWidgetState extends State<DetailWidget> {
                                                                           context)
                                                                       .bodySmall
                                                                       .fontStyle,
+                                                                  lineHeight:
+                                                                      1.5,
                                                                 ),
-                                                                color: Color(
-                                                                    0xFF444651),
-                                                                fontSize: 12.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .fontStyle,
-                                                                lineHeight: 1.5,
-                                                              ),
-                                                        ),
-                                                      ].divide(SizedBox(
-                                                          height: 4.0)),
+                                                          ),
+                                                        ].divide(SizedBox(
+                                                            height: 4.0)),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ].divide(SizedBox(width: 12.0)),
-                                              );
-                                            },
+                                                  ].divide(
+                                                      SizedBox(width: 12.0)),
+                                                );
+                                              },
+                                            ),
                                           );
                                         },
                                       );

@@ -336,24 +336,34 @@ class _SignInWidgetState extends State<SignInWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          'Forgot your password?',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.outfit(
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 14.0,
-                                    letterSpacing: 0.0,
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            context.pushNamed(ForgotpasswordWidget.routeName);
+                          },
+                          child: Text(
+                            'Forgot your password?',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.outfit(
                                     fontWeight: FontWeight.w600,
                                     fontStyle: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .fontStyle,
                                   ),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w600,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
+                          ),
                         ),
                       ],
                     ),
@@ -378,6 +388,10 @@ class _SignInWidgetState extends State<SignInWidget> {
                                   ),
                             );
                             if (_model.adminData!.take(5).toList().isNotEmpty) {
+                              FFAppState().loggedInUserId =
+                                  _model.adminData!.firstOrNull!.id;
+                              safeSetState(() {});
+
                               context.pushNamed(HomeWidget.routeName);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(

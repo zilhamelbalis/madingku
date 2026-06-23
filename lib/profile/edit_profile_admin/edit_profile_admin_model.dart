@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart';
 import 'dart:ui';
 import '/index.dart';
 import 'edit_profile_admin_widget.dart' show EditProfileAdminWidget;
@@ -33,10 +32,6 @@ class EditProfileAdminModel extends FlutterFlowModel<EditProfileAdminWidget> {
   FocusNode? textFieldFocusNode3;
   TextEditingController? textController3;
   String? Function(BuildContext, String?)? textController3Validator;
-  bool isDataUploading_uploadDataRv5 = false;
-  FFUploadedFile uploadedLocalFile_uploadDataRv5 =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
-  String uploadedFileUrl_uploadDataRv5 = '';
 
   @override
   void initState(BuildContext context) {}

@@ -149,7 +149,7 @@ class _NotifikasiWidgetState extends State<NotifikasiWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Asep Suka Berak',
+                                      'Asep Suka Matcha',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(

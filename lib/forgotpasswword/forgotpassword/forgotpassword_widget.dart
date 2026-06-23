@@ -261,8 +261,8 @@ class _ForgotpasswordWidgetState extends State<ForgotpasswordWidget> {
                           ),
                         ),
                         FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            context.safePop();
                           },
                           text: 'Back to login',
                           options: FFButtonOptions(

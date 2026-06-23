@@ -131,55 +131,43 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 itemBuilder: (context, listViewIndex) {
                                   final listViewPostinganRow =
                                       listViewPostinganRowList[listViewIndex];
-                                  return FutureBuilder<List<AdminRow>>(
-                                    future: AdminTable().querySingleRow(
-                                      queryFn: (q) => q.eqOrNull(
-                                        'id',
-                                        listViewPostinganRow.idAdmin,
+                                  return Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 20.0),
+                                    child: FutureBuilder<List<AdminRow>>(
+                                      future: AdminTable().querySingleRow(
+                                        queryFn: (q) => q.eqOrNull(
+                                          'id',
+                                          listViewPostinganRow.idAdmin,
+                                        ),
                                       ),
-                                    ),
-                                    builder: (context, snapshot) {
-                                      // Customize what your widget looks like when it's loading.
-                                      if (!snapshot.hasData) {
-                                        return Center(
-                                          child: SizedBox(
-                                            width: 50.0,
-                                            height: 50.0,
-                                            child: CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                FlutterFlowTheme.of(context)
-                                                    .primary,
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 50.0,
+                                              height: 50.0,
+                                              child: CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        );
-                                      }
-                                      List<AdminRow> columnAdminRowList =
-                                          snapshot.data!;
-
-                                      final columnAdminRow =
-                                          columnAdminRowList.isNotEmpty
-                                              ? columnAdminRowList.first
-                                              : null;
-
-                                      return InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          context.pushNamed(
-                                            DetailWidget.routeName,
-                                            queryParameters: {
-                                              'postId': serializeParam(
-                                                listViewPostinganRow.id,
-                                                ParamType.int,
-                                              ),
-                                            }.withoutNulls,
                                           );
-                                        },
-                                        child: SingleChildScrollView(
+                                        }
+                                        List<AdminRow> columnAdminRowList =
+                                            snapshot.data!;
+
+                                        final columnAdminRow =
+                                            columnAdminRowList.isNotEmpty
+                                                ? columnAdminRowList.first
+                                                : null;
+
+                                        return SingleChildScrollView(
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             crossAxisAlignment:
@@ -297,7 +285,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                   Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
-                                                            .fromSTEB(160.0,
+                                                            .fromSTEB(110.0,
                                                                 0.0, 0.0, 0.0),
                                                     child: Text(
                                                       dateTimeFormat(
@@ -364,17 +352,36 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                   .fontStyle,
                                                         ),
                                               ),
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(12.0),
-                                                child: Image.asset(
-                                                  key: ValueKey(
-                                                      listViewPostinganRow
-                                                          .gambar!),
-                                                  'assets/images/h6wmom.png',
-                                                  width: double.infinity,
-                                                  height: 200.0,
-                                                  fit: BoxFit.cover,
+                                              InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                onTap: () async {
+                                                  context.pushNamed(
+                                                    DetailWidget.routeName,
+                                                    queryParameters: {
+                                                      'postId': serializeParam(
+                                                        listViewPostinganRow.id,
+                                                        ParamType.int,
+                                                      ),
+                                                    }.withoutNulls,
+                                                  );
+                                                },
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                  child: Image.asset(
+                                                    key: ValueKey(
+                                                        listViewPostinganRow
+                                                            .gambar!),
+                                                    'assets/images/h6wmom.png',
+                                                    width: double.infinity,
+                                                    height: 200.0,
+                                                    fit: BoxFit.cover,
+                                                  ),
                                                 ),
                                               ),
                                               Row(
@@ -420,9 +427,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               ),
                                             ].divide(SizedBox(height: 16.0)),
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   );
                                 },
                               );
