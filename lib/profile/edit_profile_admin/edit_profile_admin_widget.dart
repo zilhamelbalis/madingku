@@ -834,8 +834,14 @@ class _EditProfileAdminWidgetState extends State<EditProfileAdminWidget> {
                                   'nama': _model.textController1.text,
                                   'email': _model.textController3.text,
                                   'username': _model.textController2.text,
-                                  'profile_img': _model.coverBaru,
-                                  'cover_img': _model.profileNew,
+                                  'profile_img': _model.coverBaru != null &&
+                                          _model.coverBaru != ''
+                                      ? _model.coverBaru
+                                      : columnUsersRow?.profileImg,
+                                  'cover_img': _model.profileNew != null &&
+                                          _model.profileNew != ''
+                                      ? _model.profileNew
+                                      : columnUsersRow?.coverImg,
                                 },
                                 matchingRows: (rows) => rows.eqOrNull(
                                   'id',

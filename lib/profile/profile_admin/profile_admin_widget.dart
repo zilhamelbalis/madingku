@@ -961,7 +961,7 @@ class _ProfileAdminWidgetState extends State<ProfileAdminWidget> {
                                             stackUsersRow?.coverImg != null &&
                                                     stackUsersRow?.coverImg !=
                                                         ''
-                                                ? stackUsersRow!.profileImg!
+                                                ? stackUsersRow!.coverImg!
                                                 : 'https://picsum.photos/seed/picsum/800/300',
                                           ),
                                         ),
@@ -1437,7 +1437,7 @@ class _ProfileAdminWidgetState extends State<ProfileAdminWidget> {
                                 if (_model.activeTab == 'like')
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 16.0),
+                                        16.0, 0.0, 16.0, 0.0),
                                     child: FutureBuilder<List<LikesRow>>(
                                       future: LikesTable().queryRows(
                                         queryFn: (q) => q.eqOrNull(
@@ -1588,7 +1588,7 @@ class _ProfileAdminWidgetState extends State<ProfileAdminWidget> {
                                                           ),
                                                           textAlign:
                                                               TextAlign.center,
-                                                          maxLines: 2,
+                                                          maxLines: 1,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .titleSmall
@@ -1700,6 +1700,9 @@ class _ProfileAdminWidgetState extends State<ProfileAdminWidget> {
                                                                       .bodySmall
                                                                       .fontStyle,
                                                                 ),
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .clip,
                                                           );
                                                         },
                                                       ),
@@ -1746,8 +1749,7 @@ class _ProfileAdminWidgetState extends State<ProfileAdminWidget> {
                                                               ),
                                                         ),
                                                       ),
-                                                    ].divide(
-                                                        SizedBox(height: 0.0)),
+                                                    ],
                                                   ),
                                                 );
                                               },
@@ -1915,7 +1917,7 @@ class _ProfileAdminWidgetState extends State<ProfileAdminWidget> {
                                                           ),
                                                           textAlign:
                                                               TextAlign.center,
-                                                          maxLines: 2,
+                                                          maxLines: 1,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .titleSmall
@@ -2027,6 +2029,9 @@ class _ProfileAdminWidgetState extends State<ProfileAdminWidget> {
                                                                       .bodySmall
                                                                       .fontStyle,
                                                                 ),
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .clip,
                                                           );
                                                         },
                                                       ),
@@ -2083,7 +2088,7 @@ class _ProfileAdminWidgetState extends State<ProfileAdminWidget> {
                                       },
                                     ),
                                   ),
-                              ],
+                              ].addToEnd(SizedBox(height: 55.0)),
                             ),
                           ),
                         ),

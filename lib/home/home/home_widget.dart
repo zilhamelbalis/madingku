@@ -103,10 +103,12 @@ class _HomeWidgetState extends State<HomeWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            child: Stack(
+              children: [
+                Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Align(
@@ -338,136 +340,182 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(24.0),
-                      child: SingleChildScrollView(
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(24.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            FutureBuilder<List<PostinganFeedRow>>(
-                              future: PostinganFeedTable().queryRows(
-                                queryFn: (q) => q
-                                    .eqOrNull(
-                                      'id_kategori',
-                                      _model.kategoriAktif,
-                                    )
-                                    .order('tanggal_dibuat'),
-                              ),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50.0,
-                                      height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context).primary,
+                            Expanded(
+                              child: FutureBuilder<List<PostinganFeedRow>>(
+                                future: PostinganFeedTable().queryRows(
+                                  queryFn: (q) => q
+                                      .eqOrNull(
+                                        'id_kategori',
+                                        _model.kategoriAktif,
+                                      )
+                                      .order('tanggal_dibuat'),
+                                ),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 50.0,
+                                        height: 50.0,
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                }
-                                List<PostinganFeedRow>
-                                    listViewPostinganFeedRowList =
-                                    snapshot.data!;
-
-                                return ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount:
-                                      listViewPostinganFeedRowList.length,
-                                  itemBuilder: (context, listViewIndex) {
-                                    final listViewPostinganFeedRow =
-                                        listViewPostinganFeedRowList[
-                                            listViewIndex];
-                                    return CardPostinganWidget(
-                                      key: Key(
-                                          'Key8gu_${listViewIndex}_of_${listViewPostinganFeedRowList.length}'),
-                                      dataPostingan: listViewPostinganFeedRow,
                                     );
-                                  },
-                                );
-                              },
+                                  }
+                                  List<PostinganFeedRow>
+                                      listViewPostinganFeedRowList =
+                                      snapshot.data!;
+
+                                  return ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount:
+                                        listViewPostinganFeedRowList.length,
+                                    itemBuilder: (context, listViewIndex) {
+                                      final listViewPostinganFeedRow =
+                                          listViewPostinganFeedRowList[
+                                              listViewIndex];
+                                      return CardPostinganWidget(
+                                        key: Key(
+                                            'Key8gu_${listViewIndex}_of_${listViewPostinganFeedRowList.length}'),
+                                        dataPostingan: listViewPostinganFeedRow,
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ].divide(SizedBox(height: 0.0)),
                         ),
                       ),
                     ),
-                  ].addToEnd(SizedBox(height: 200.0)),
+                  ].addToEnd(SizedBox(height: 55.0)),
                 ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0.0, 1.0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                  child: Container(
-                    width: 500.0,
-                    height: 80.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 12.0,
-                          color: Color(0x1A000000),
-                          offset: Offset(
-                            0.0,
-                            4.0,
-                          ),
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(40.0),
-                    ),
-                    child: Align(
-                      alignment: AlignmentDirectional(0.0, 1.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.home,
-                                color: FlutterFlowTheme.of(context).primary,
-                                size: 28.0,
-                              ),
-                              Text(
-                                'Home',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.outfit(
+                Align(
+                  alignment: AlignmentDirectional(0.0, 1.0),
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                    child: Container(
+                      width: 500.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 12.0,
+                            color: Color(0x1A000000),
+                            offset: Offset(
+                              0.0,
+                              4.0,
+                            ),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(40.0),
+                      ),
+                      child: Align(
+                        alignment: AlignmentDirectional(0.0, 1.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.home,
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  size: 28.0,
+                                ),
+                                Text(
+                                  'Home',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.outfit(
+                                          fontWeight: FontWeight.normal,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        fontSize: 12.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                         fontStyle: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .fontStyle,
                                       ),
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      fontSize: 12.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.normal,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
+                                ),
+                              ].divide(SizedBox(height: 4.0)),
+                            ),
+                            if (FFAppState().loggedInUserRole != 'user')
+                              InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  context
+                                      .pushNamed(BuatpostinganWidget.routeName);
+                                },
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.add_circle_outline,
+                                      color: Color(0xFF9A9A9A),
+                                      size: 28.0,
                                     ),
+                                    Text(
+                                      'Create',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.outfit(
+                                              fontWeight: FontWeight.normal,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: Color(0xFF9A9A9A),
+                                            fontSize: 12.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                    ),
+                                  ].divide(SizedBox(height: 4.0)),
+                                ),
                               ),
-                            ].divide(SizedBox(height: 4.0)),
-                          ),
-                          if (FFAppState().loggedInUserRole != 'user')
                             InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context
-                                    .pushNamed(BuatpostinganWidget.routeName);
+                                context.pushNamed(NotifikasiWidget.routeName);
                               },
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
@@ -475,12 +523,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    Icons.add_circle_outline,
+                                    Icons.notifications_none,
                                     color: Color(0xFF9A9A9A),
                                     size: 28.0,
                                   ),
                                   Text(
-                                    'Create',
+                                    'Notifications',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -504,97 +552,57 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 ].divide(SizedBox(height: 4.0)),
                               ),
                             ),
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              context.pushNamed(NotifikasiWidget.routeName);
-                            },
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.notifications_none,
-                                  color: Color(0xFF9A9A9A),
-                                  size: 28.0,
-                                ),
-                                Text(
-                                  'Notifications',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.outfit(
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.pushNamed(ProfileAdminWidget.routeName);
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.person_outline,
+                                    color: Color(0xFF9A9A9A),
+                                    size: 28.0,
+                                  ),
+                                  Text(
+                                    'Profile',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.outfit(
+                                            fontWeight: FontWeight.normal,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          color: Color(0xFF9A9A9A),
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.normal,
                                           fontStyle:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
-                                        color: Color(0xFF9A9A9A),
-                                        fontSize: 12.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.normal,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                              ].divide(SizedBox(height: 4.0)),
+                                  ),
+                                ].divide(SizedBox(height: 4.0)),
+                              ),
                             ),
-                          ),
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              context.pushNamed(ProfileAdminWidget.routeName);
-                            },
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.person_outline,
-                                  color: Color(0xFF9A9A9A),
-                                  size: 28.0,
-                                ),
-                                Text(
-                                  'Profile',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.outfit(
-                                          fontWeight: FontWeight.normal,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: Color(0xFF9A9A9A),
-                                        fontSize: 12.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.normal,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                              ].divide(SizedBox(height: 4.0)),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -117,7 +117,12 @@ class _NotifikasiWidgetState extends State<NotifikasiWidget> {
                           notifikasiNotifikasiDetailRowList.toList();
 
                       return ListView.builder(
-                        padding: EdgeInsets.zero,
+                        padding: EdgeInsets.fromLTRB(
+                          0,
+                          0,
+                          0,
+                          55.0,
+                        ),
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         itemCount: dataNotif.length,
@@ -258,7 +263,10 @@ class _NotifikasiWidgetState extends State<NotifikasiWidget> {
                                                     ),
                                                   ],
                                                 ),
-                                              if (dataNotifItem.tipe == 'komen')
+                                              if ((dataNotifItem.tipe ==
+                                                      'postingan_baru') ||
+                                                  (dataNotifItem.tipe ==
+                                                      'komen'))
                                                 Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -266,7 +274,7 @@ class _NotifikasiWidgetState extends State<NotifikasiWidget> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      '${dataNotifItem.namaPengirim} mengomentari postinganmu',
+                                                      '${dataNotifItem.namaPengirim}${dataNotifItem.tipe == 'komen' ? ' mengomentari postinganmu' : ''}',
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyMedium
