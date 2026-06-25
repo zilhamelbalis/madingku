@@ -1,3 +1,4 @@
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -29,6 +30,8 @@ class _MenuPilihFotoWidgetState extends State<MenuPilihFotoWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => MenuPilihFotoModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -90,7 +93,7 @@ class _MenuPilihFotoWidgetState extends State<MenuPilihFotoWidget> {
                 highlightColor: Colors.transparent,
                 onTap: () async {
                   final selectedMedia = await selectMedia(
-                    imageQuality: 100,
+                    storageFolderPath: '',
                     mediaSource: MediaSource.photoGallery,
                     multiImage: false,
                   );
@@ -101,6 +104,7 @@ class _MenuPilihFotoWidgetState extends State<MenuPilihFotoWidget> {
                         () => _model.isDataUploading_uploadDataTuy = true);
                     var selectedUploadedFiles = <FFUploadedFile>[];
 
+                    var downloadUrls = <String>[];
                     try {
                       selectedUploadedFiles = selectedMedia
                           .map((m) => FFUploadedFile(
@@ -112,13 +116,21 @@ class _MenuPilihFotoWidgetState extends State<MenuPilihFotoWidget> {
                                 originalFilename: m.originalFilename,
                               ))
                           .toList();
+
+                      downloadUrls = await uploadSupabaseStorageFiles(
+                        bucketName: 'profiles',
+                        selectedFiles: selectedMedia,
+                      );
                     } finally {
                       _model.isDataUploading_uploadDataTuy = false;
                     }
-                    if (selectedUploadedFiles.length == selectedMedia.length) {
+                    if (selectedUploadedFiles.length == selectedMedia.length &&
+                        downloadUrls.length == selectedMedia.length) {
                       safeSetState(() {
                         _model.uploadedLocalFile_uploadDataTuy =
                             selectedUploadedFiles.first;
+                        _model.uploadedFileUrl_uploadDataTuy =
+                            downloadUrls.first;
                       });
                     } else {
                       safeSetState(() {});
@@ -126,8 +138,7 @@ class _MenuPilihFotoWidgetState extends State<MenuPilihFotoWidget> {
                     }
                   }
 
-                  Navigator.pop(
-                      context, _model.uploadedLocalFile_uploadDataTuy);
+                  Navigator.pop(context, _model.uploadedFileUrl_uploadDataTuy);
                 },
                 child: Container(
                   width: double.infinity,

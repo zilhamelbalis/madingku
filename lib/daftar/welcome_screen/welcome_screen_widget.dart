@@ -31,6 +31,8 @@ class _WelcomeScreenWidgetState extends State<WelcomeScreenWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => WelcomeScreenModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

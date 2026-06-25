@@ -17,9 +17,6 @@ class PostinganRow extends SupabaseDataRow {
   int get id => getField<int>('id')!;
   set id(int value) => setField<int>('id', value);
 
-  int? get idAdmin => getField<int>('id_admin');
-  set idAdmin(int? value) => setField<int>('id_admin', value);
-
   int? get idKategori => getField<int>('id_kategori');
   set idKategori(int? value) => setField<int>('id_kategori', value);
 
@@ -35,4 +32,7 @@ class PostinganRow extends SupabaseDataRow {
   DateTime? get tanggalDibuat => getField<DateTime>('tanggal_dibuat');
   set tanggalDibuat(DateTime? value) =>
       setField<DateTime>('tanggal_dibuat', value);
+
+  int? get idUsers => getField<int>('id_users');
+  set idUsers(int? value) => setField<int>('id_users', value);
 }

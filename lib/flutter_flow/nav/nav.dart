@@ -97,6 +97,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'postId',
               ParamType.int,
             ),
+            autoFocusKomen: params.getParam(
+              'autoFocusKomen',
+              ParamType.bool,
+            ),
+            statusLikeDariHome: params.getParam(
+              'statusLikeDariHome',
+              ParamType.bool,
+            ),
+            statusSaveDariHome: params.getParam(
+              'statusSaveDariHome',
+              ParamType.bool,
+            ),
           ),
         ),
         FFRoute(

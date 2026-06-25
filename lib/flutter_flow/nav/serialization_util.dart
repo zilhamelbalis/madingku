@@ -252,10 +252,16 @@ dynamic deserializeParam<T>(
             return KomenRow(data);
           case LikesRow:
             return LikesRow(data);
+          case NotifikasiRow:
+            return NotifikasiRow(data);
+          case NotifikasiDetailRow:
+            return NotifikasiDetailRow(data);
           case PengajuanRow:
             return PengajuanRow(data);
           case PostinganRow:
             return PostinganRow(data);
+          case PostinganFeedRow:
+            return PostinganFeedRow(data);
           case SimpanPostinganRow:
             return SimpanPostinganRow(data);
           case UsersRow:

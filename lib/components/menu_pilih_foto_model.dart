@@ -1,3 +1,4 @@
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -14,6 +15,7 @@ class MenuPilihFotoModel extends FlutterFlowModel<MenuPilihFotoWidget> {
   bool isDataUploading_uploadDataTuy = false;
   FFUploadedFile uploadedLocalFile_uploadDataTuy =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+  String uploadedFileUrl_uploadDataTuy = '';
 
   @override
   void initState(BuildContext context) {}

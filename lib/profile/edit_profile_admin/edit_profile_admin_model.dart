@@ -14,12 +14,16 @@ import 'package:provider/provider.dart';
 class EditProfileAdminModel extends FlutterFlowModel<EditProfileAdminWidget> {
   ///  Local state fields for this page.
 
-  FFUploadedFile? coverBaru;
+  String? coverBaru;
+
+  String? profileNew;
 
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Bottom Sheet - MenuPilihFoto] action in Container widget.
-  FFUploadedFile? hasilBottomSheet;
+  String? profileBaru;
+  // Stores action output result for [Bottom Sheet - MenuPilihFoto] action in Container widget.
+  String? hasilBottomSheet;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
   TextEditingController? textController1;

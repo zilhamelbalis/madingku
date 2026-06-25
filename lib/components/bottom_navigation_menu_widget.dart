@@ -31,6 +31,8 @@ class _BottomNavigationMenuWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => BottomNavigationMenuModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

@@ -36,6 +36,8 @@ class _SignInWidgetState extends State<SignInWidget> {
 
     _model.textController2 ??= TextEditingController();
     _model.textFieldFocusNode2 ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -376,7 +378,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                       children: [
                         FFButtonWidget(
                           onPressed: () async {
-                            _model.adminData = await AdminTable().queryRows(
+                            _model.adminData = await UsersTable().queryRows(
                               queryFn: (q) => q
                                   .eqOrNull(
                                     'email',
@@ -390,6 +392,8 @@ class _SignInWidgetState extends State<SignInWidget> {
                             if (_model.adminData!.take(5).toList().isNotEmpty) {
                               FFAppState().loggedInUserId =
                                   _model.adminData!.firstOrNull!.id;
+                              FFAppState().loggedInUserRole =
+                                  _model.adminData!.firstOrNull!.role!;
                               safeSetState(() {});
 
                               context.pushNamed(HomeWidget.routeName);
@@ -443,8 +447,8 @@ class _SignInWidgetState extends State<SignInWidget> {
                           ),
                         ),
                         FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            context.pushNamed(SignUpWidget.routeName);
                           },
                           text: 'Create new account',
                           options: FFButtonOptions(

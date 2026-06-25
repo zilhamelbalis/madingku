@@ -35,10 +35,11 @@ class _EditProfileAdminWidgetState extends State<EditProfileAdminWidget> {
 
     _model.textFieldFocusNode1 ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController(text: 'bemsttnf');
     _model.textFieldFocusNode2 ??= FocusNode();
 
     _model.textFieldFocusNode3 ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -99,8 +100,8 @@ class _EditProfileAdminWidgetState extends State<EditProfileAdminWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: FutureBuilder<List<AdminRow>>(
-            future: AdminTable().querySingleRow(
+          child: FutureBuilder<List<UsersRow>>(
+            future: UsersTable().querySingleRow(
               queryFn: (q) => q.eqOrNull(
                 'id',
                 FFAppState().loggedInUserId,
@@ -121,10 +122,10 @@ class _EditProfileAdminWidgetState extends State<EditProfileAdminWidget> {
                   ),
                 );
               }
-              List<AdminRow> columnAdminRowList = snapshot.data!;
+              List<UsersRow> columnUsersRowList = snapshot.data!;
 
-              final columnAdminRow = columnAdminRowList.isNotEmpty
-                  ? columnAdminRowList.first
+              final columnUsersRow = columnUsersRowList.isNotEmpty
+                  ? columnUsersRowList.first
                   : null;
 
               return SingleChildScrollView(
@@ -134,18 +135,37 @@ class _EditProfileAdminWidgetState extends State<EditProfileAdminWidget> {
                   children: [
                     Stack(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.all(14.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(14.0),
-                            child: Image.asset(
-                              'assets/images/2letcf.png',
-                              width: double.infinity,
-                              height: 200.0,
-                              fit: BoxFit.cover,
+                        if (_model.profileNew != null &&
+                            _model.profileNew != '')
+                          Padding(
+                            padding: EdgeInsets.all(14.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(14.0),
+                              child: Image.network(
+                                _model.profileNew!,
+                                width: double.infinity,
+                                height: 200.0,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        ),
+                        if (_model.profileNew == null ||
+                            _model.profileNew == '')
+                          Padding(
+                            padding: EdgeInsets.all(14.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(14.0),
+                              child: Image.network(
+                                columnUsersRow?.coverImg != null &&
+                                        columnUsersRow?.coverImg != ''
+                                    ? columnUsersRow!.coverImg!
+                                    : 'https://picsum.photos/seed/picsum/800/300',
+                                width: double.infinity,
+                                height: 200.0,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                         Align(
                           alignment: AlignmentDirectional(0.0, 1.0),
                           child: Padding(
@@ -181,7 +201,13 @@ class _EditProfileAdminWidgetState extends State<EditProfileAdminWidget> {
                                           ),
                                         );
                                       },
-                                    ).then((value) => safeSetState(() {}));
+                                    ).then((value) => safeSetState(
+                                        () => _model.profileBaru = value));
+
+                                    _model.profileNew = _model.profileBaru;
+                                    safeSetState(() {});
+
+                                    safeSetState(() {});
                                   },
                                   child: Container(
                                     width: 150.0,
@@ -267,18 +293,15 @@ class _EditProfileAdminWidgetState extends State<EditProfileAdminWidget> {
                                     child: Stack(
                                       children: [
                                         if (_model.coverBaru != null &&
-                                            (_model.coverBaru?.bytes
-                                                    ?.isNotEmpty ??
-                                                false))
+                                            _model.coverBaru != '')
                                           Align(
                                             alignment:
                                                 AlignmentDirectional(0.0, 0.0),
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(200.0),
-                                              child: Image.memory(
-                                                _model.coverBaru?.bytes ??
-                                                    Uint8List.fromList([]),
+                                              child: Image.network(
+                                                _model.coverBaru!,
                                                 width: 100.0,
                                                 height: 100.0,
                                                 fit: BoxFit.contain,
@@ -286,19 +309,33 @@ class _EditProfileAdminWidgetState extends State<EditProfileAdminWidget> {
                                             ),
                                           ),
                                         if (_model.coverBaru == null ||
-                                            (_model.coverBaru?.bytes?.isEmpty ??
-                                                true))
+                                            _model.coverBaru == '')
                                           Align(
                                             alignment:
                                                 AlignmentDirectional(0.0, 0.0),
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(200.0),
-                                              child: Image.asset(
-                                                'assets/images/logo_only@3x.png',
+                                              child: Image.network(
+                                                columnUsersRow?.profileImg !=
+                                                            null &&
+                                                        columnUsersRow
+                                                                ?.profileImg !=
+                                                            ''
+                                                    ? columnUsersRow!
+                                                        .profileImg!
+                                                    : 'https://ui-avatars.com/api/?background=random&name=${columnUsersRow?.nama}',
                                                 width: 100.0,
                                                 height: 100.0,
                                                 fit: BoxFit.contain,
+                                                errorBuilder: (context, error,
+                                                        stackTrace) =>
+                                                    Image.asset(
+                                                  'assets/images/error_image.png',
+                                                  width: 100.0,
+                                                  height: 100.0,
+                                                  fit: BoxFit.contain,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -381,12 +418,32 @@ class _EditProfileAdminWidgetState extends State<EditProfileAdminWidget> {
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text(
+                                'Full Name',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.outfit(
+                                        fontWeight: FontWeight.w500,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      color: Color(0xFF323232),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                              ),
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
                                   controller: _model.textController1 ??=
                                       TextEditingController(
-                                    text: columnAdminRow?.nama,
+                                    text: columnUsersRow?.nama,
                                   ),
                                   focusNode: _model.textFieldFocusNode1,
                                   autofocus: false,
@@ -511,7 +568,10 @@ class _EditProfileAdminWidgetState extends State<EditProfileAdminWidget> {
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.textController2,
+                                  controller: _model.textController2 ??=
+                                      TextEditingController(
+                                    text: columnUsersRow?.username,
+                                  ),
                                   focusNode: _model.textFieldFocusNode2,
                                   autofocus: false,
                                   obscureText: false,
@@ -668,7 +728,7 @@ class _EditProfileAdminWidgetState extends State<EditProfileAdminWidget> {
                                 child: TextFormField(
                                   controller: _model.textController3 ??=
                                       TextEditingController(
-                                    text: columnAdminRow?.email,
+                                    text: columnUsersRow?.email,
                                   ),
                                   focusNode: _model.textFieldFocusNode3,
                                   autofocus: false,
@@ -769,10 +829,13 @@ class _EditProfileAdminWidgetState extends State<EditProfileAdminWidget> {
                           ),
                           FFButtonWidget(
                             onPressed: () async {
-                              await AdminTable().update(
+                              await UsersTable().update(
                                 data: {
                                   'nama': _model.textController1.text,
                                   'email': _model.textController3.text,
+                                  'username': _model.textController2.text,
+                                  'profile_img': _model.coverBaru,
+                                  'cover_img': _model.profileNew,
                                 },
                                 matchingRows: (rows) => rows.eqOrNull(
                                   'id',
@@ -793,7 +856,8 @@ class _EditProfileAdminWidgetState extends State<EditProfileAdminWidget> {
                                       FlutterFlowTheme.of(context).secondary,
                                 ),
                               );
-                              context.safePop();
+
+                              context.goNamed(ProfileAdminWidget.routeName);
                             },
                             text: 'Save Profile',
                             options: FFButtonOptions(

@@ -21,6 +21,10 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _loggedInUserId = prefs.getInt('ff_loggedInUserId') ?? _loggedInUserId;
     });
+    _safeInit(() {
+      _loggedInUserRole =
+          prefs.getString('ff_loggedInUserRole') ?? _loggedInUserRole;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -35,6 +39,13 @@ class FFAppState extends ChangeNotifier {
   set loggedInUserId(int value) {
     _loggedInUserId = value;
     prefs.setInt('ff_loggedInUserId', value);
+  }
+
+  String _loggedInUserRole = '';
+  String get loggedInUserRole => _loggedInUserRole;
+  set loggedInUserRole(String value) {
+    _loggedInUserRole = value;
+    prefs.setString('ff_loggedInUserRole', value);
   }
 }
 

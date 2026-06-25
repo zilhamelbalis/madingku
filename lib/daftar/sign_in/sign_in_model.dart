@@ -23,7 +23,7 @@ class SignInModel extends FlutterFlowModel<SignInWidget> {
   late bool passwordVisibility;
   String? Function(BuildContext, String?)? textController2Validator;
   // Stores action output result for [Backend Call - Query Rows] action in Button widget.
-  List<AdminRow>? adminData;
+  List<UsersRow>? adminData;
 
   @override
   void initState(BuildContext context) {
